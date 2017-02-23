@@ -7,7 +7,7 @@ import java.util.Map;
  * Created by magiccrafter on 2/23/2017.
  */
 public class Endpoint {
-
+	public int id;
     public final int datacenterLatencyMS;
     public final int connectedCaches;
     // <cache id, latency>

@@ -65,13 +65,13 @@ public class Main {
 		ep1.cacheLatency.put(1, 300);
 		bag1.endpoints.add(ep1);
 		Endpoint ep2 = new Endpoint(1000, 2);
-		ep2.cacheLatency.put(0, 200);
+		ep2.cacheLatency.put(1, 200);
 		ep2.cacheLatency.put(1, 300);
 		bag1.endpoints.add(ep2);
 		VideoRequest req1 = new VideoRequest(0, 0, 1000);
-		VideoRequest req2 = new VideoRequest(1, 0, 1000);
+		VideoRequest req2 = new VideoRequest(1, 1, 1000);
 		VideoRequest req3 = new VideoRequest(2, 0, 1000);
-		VideoRequest req4 = new VideoRequest(3, 0, 1000);
+		VideoRequest req4 = new VideoRequest(3, 1, 1000);
 		bag1.videoRequests.add(req1);
 		bag1.videoRequests.add(req2);
 		bag1.videoRequests.add(req3);
