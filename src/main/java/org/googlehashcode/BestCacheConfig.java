@@ -29,7 +29,7 @@ public class BestCacheConfig {
 				reqs.stream().filter(reqs1 -> {
 					return reqs1.endpointId == e.id;
 				}).forEach(reqs2 -> {
-					wieghtedCaches.get(key).weightUsage *= reqs2.requestsNumber;
+					wieghtedCaches.get(key).weightUsage *= (reqs2.requestsNumber * e.cacheLatency.get(key).intValue());
 				});
 			});
 		});
@@ -41,10 +41,27 @@ public class BestCacheConfig {
 
 	}
 
+	private List<VideoCache> createCaches(Bag bag) {
+		List<VideoCache> caches = new ArrayList<>();
+
+		for (int i = 0; i < bag.cacheServersNumber; ++i) {
+			VideoCache c = new VideoCache();
+			c.id = i;
+			c.memRemaining = bag.cacheServerCapacityMB;
+			caches.add(c);
+		}
+
+		return caches;
+	}
+
 	public long loadBestConfig(Bag bag) {
 		long savedLat = 0L;
 		boolean stop = false;
-		VideoCache curCache = new VideoCache();
+
+		List<VideoCache> weightedCaches = prioritizeCacheByWeight(bag.endpoints, createCaches(bag), bag.videoRequests);
+
+		int curCacheId = 0;
+		VideoCache curCache = weightedCaches.get(curCacheId);
 
 		curCache.memRemaining = bag.cacheServerCapacityMB;
 		do {
@@ -53,12 +70,11 @@ public class BestCacheConfig {
 			for (Integer vidSize : bag.videoSizes) {
 				if (curCache.memRemaining - vidSize >= 0) {
 					curCache.vidIds.add(vidId);
+					curCache.memRemaining -= vidSize;
 					++vidId;
 				}
 				else {
-					caches.add(curCache);
-					curCache = new VideoCache();
-					curCache.memRemaining = bag.cacheServerCapacityMB;
+					curCache = weightedCaches.get(++curCacheId);
 				}
 			}
 			caches.add(curCache);
