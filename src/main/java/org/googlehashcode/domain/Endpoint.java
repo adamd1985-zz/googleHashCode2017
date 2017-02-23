@@ -28,6 +28,7 @@ public class Endpoint {
         return "Endpoint{" +
                 "datacenterLatencyMS=" + datacenterLatencyMS +
                 ", connectedCaches=" + connectedCaches +
+                ", cacheLatency=" + cacheLatency +
                 '}';
     }
 }
