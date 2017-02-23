@@ -3,6 +3,9 @@ package org.googlehashcode;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.googlehashcode.domain.Bag;
+import org.googlehashcode.domain.VideoCache;
+
 public class BestCacheConfig {
 	final int[] vidSizes = { 20, 11 };
 
@@ -35,9 +38,9 @@ public class BestCacheConfig {
 
 	List<VidCache> caches = new ArrayList<>();
 
-	public void loadBestConfig() {
+	public void loadBestConfig(Bag bag) {
 		boolean stop = false;
-		VidCache curCache = new VidCache();
+		VideoCache curCache = new VideoCache();
 		do {
 			int vidId = 0;
 			for (int vidSize : vidSizes) {
