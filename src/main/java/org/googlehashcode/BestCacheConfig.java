@@ -22,7 +22,7 @@ public class BestCacheConfig {
 		});
 
 		endpoints.forEach(e -> {
-			
+
 			reqs.parallelStream().filter(reqs1 -> {
 				return reqs1.endpointId == e.id;
 			}).forEach(reqs2 -> {
@@ -34,14 +34,11 @@ public class BestCacheConfig {
 
 			});
 
-			
-			
-			
-			/*reqs.parallelStream().filter(reqs1 -> {
-				return reqs1.endpointId == e.id;
-			}).forEach(reqs2 -> {
-				wieghtedCaches.get(key).weightUsage *= (reqs2.requestsNumber * e.cacheLatency.get(key).intValue());
-			});*/
+			/*
+			 * reqs.parallelStream().filter(reqs1 -> { return reqs1.endpointId == e.id;
+			 * }).forEach(reqs2 -> { wieghtedCaches.get(key).weightUsage *= (reqs2.requestsNumber *
+			 * e.cacheLatency.get(key).intValue()); });
+			 */
 		});
 
 		return wieghtedCaches.entrySet().parallelStream()
@@ -55,6 +52,7 @@ public class BestCacheConfig {
 		List<VideoCache> caches = new ArrayList<>();
 
 		for (int i = 0; i < bag.cacheServersNumber; ++i) {
+			System.out.println("Creating cache: " + i);
 			VideoCache c = new VideoCache();
 			c.id = i;
 			c.memRemaining = bag.cacheServerCapacityMB;
@@ -78,19 +76,28 @@ public class BestCacheConfig {
 		System.out.println("Filling caches");
 		do {
 
-			int vidId = 0;
-			for (Integer vidSize : bag.videoSizes) {
+			for (int vidId = 0; vidId < bag.videoSizes.size(); vidId++) {
+				long vidSize = bag.videoSizes.get(vidId);
+				System.out.println(" vidId: " + vidId + " vidSize: " + vidSize);
 				if (curCache.memRemaining - vidSize > 0) {
+					System.out.println("cacheid: " + curCache.id + "curCache.memRemaining: " + curCache.memRemaining);
+					System.out.println("vidSize: " + vidSize + " of: " + vidId);
 					curCache.vidIds.add(vidId);
 					curCache.memRemaining -= vidSize;
+
 					++vidId;
 				}
 				else {
+					System.out.println("no more mem curCache.memRemaining: " + curCache.memRemaining);
 					++curCacheId;
 					if (curCacheId >= weightedCaches.size()) {
 						break;
 					}
 					curCache = weightedCaches.get(curCacheId);
+					--vidId;
+				}
+				if (vidId > bag.videoSizes.size()) {
+					break;
 				}
 			}
 
