@@ -10,6 +10,7 @@ public class Endpoint {
 
     public final int datacenterLatencyMS;
     public final int connectedCaches;
+    // <cache id, latency>
     public final Map<Integer, Integer> cacheLatency = new HashMap<>();
 
     public Endpoint(int datacenterLatencyMS, int connectedCaches) {
