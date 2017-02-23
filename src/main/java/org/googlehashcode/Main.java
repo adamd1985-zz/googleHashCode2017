@@ -43,8 +43,9 @@ public class Main {
 	 * @throws URISyntaxException
 	 */
 	public static void main(String[] args) throws IOException, URISyntaxException {
-		String[] filenames = { "kittens", "me_at_the_zoo", "trending_today", "videos_worth_spreading" };
+		String[] filenames = { "test", "kittens", "me_at_the_zoo", "trending_today", "videos_worth_spreading" };
 		for (String filename : filenames) {
+			System.out.println("\nProcessing file: " + filename);
 			Bag bag = Parser.parse(filename + ".in");
 
 			final BestCacheConfig bestCacheConfig = new BestCacheConfig();
