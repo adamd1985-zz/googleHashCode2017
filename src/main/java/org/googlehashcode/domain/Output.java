@@ -11,10 +11,12 @@ import java.util.stream.Collectors;
  */
 public class Output {
 
+    public int serversNumber;
     public final Map<Integer, List<Integer>> cacheServers = new HashMap<>();
 
     public Output(List<Integer> serverIds) {
         serverIds.forEach(id -> cacheServers.put(id, new ArrayList<>()));
+        serversNumber = serverIds.size();
     }
 
     public void addVideo(int serverId, int videoId) {
