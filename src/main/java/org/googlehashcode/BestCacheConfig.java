@@ -25,9 +25,9 @@ public class BestCacheConfig {
 
 		endpoints.forEach(e -> {
 
-			e.cacheLatency.keySet().stream().forEach(key -> {
+			e.cacheLatency.keySet().parallelStream().forEach(key -> {
 				wieghtedCaches.get(key).weightUsage++;
-				reqs.stream().filter(reqs1 -> {
+				reqs.parallelStream().filter(reqs1 -> {
 					return reqs1.endpointId == e.id;
 				}).forEach(reqs2 -> {
 					wieghtedCaches.get(key).weightUsage *= (reqs2.requestsNumber * e.cacheLatency.get(key).intValue());
@@ -35,7 +35,7 @@ public class BestCacheConfig {
 			});
 		});
 
-		return wieghtedCaches.entrySet().stream()
+		return wieghtedCaches.entrySet().parallelStream()
 				.map(x -> x.getValue())
 				.sorted(Comparator.comparing(VideoCache::getWeightUsage).reversed())
 				.collect(Collectors.toList());
@@ -52,18 +52,21 @@ public class BestCacheConfig {
 			caches.add(c);
 		}
 
+		System.out.println("Cache created");
+
 		return caches;
 	}
 
 	public Output loadBestConfig(Bag bag) {
 		long savedLat = 0L;
 		boolean stop = false;
-
+		System.out.println("Loading caches");
 		List<VideoCache> weightedCaches = prioritizeCacheByWeight(bag.endpoints, createCaches(bag), bag.videoRequests);
 		Output output = new Output(weightedCaches.size());
 
 		int curCacheId = 0;
 		VideoCache curCache = weightedCaches.get(curCacheId);
+		System.out.println("Filling caches");
 		do {
 
 			int vidId = 0;
@@ -82,6 +85,7 @@ public class BestCacheConfig {
 				}
 			}
 			caches.add(curCache);
+			System.out.println("Judged vids");
 			for (VideoRequest req : bag.videoRequests) {
 				for (VideoCache videoCache : caches) {
 					if (!bag.endpoints.get(req.endpointId).cacheLatency.containsKey(caches.indexOf(videoCache))) {
@@ -102,7 +106,7 @@ public class BestCacheConfig {
 					}
 				}
 			}
-
+			System.out.println("Populated reqs");
 			stop = true;
 		}
 		while (!stop);
