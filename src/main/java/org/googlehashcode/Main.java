@@ -1,7 +1,9 @@
 package org.googlehashcode;
 
 import org.googlehashcode.domain.Bag;
+import org.googlehashcode.domain.Endpoint;
 import org.googlehashcode.domain.Output;
+import org.googlehashcode.domain.VideoRequest;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -51,5 +53,28 @@ public class Main {
 		System.out.println(output);
 
 		OutputWriter.writeToFile(filename + ".out", output);
+	}
+
+	private static Bag simpleTestBag() {
+		Bag bag = new Bag(2, 2, 4, 2, 400);
+		bag.videoSizes.add(100);
+		bag.videoSizes.add(200);
+		Endpoint ep1 = new Endpoint(1000, 2);
+		ep1.cacheLatency.put(0, 200);
+		ep1.cacheLatency.put(1, 300);
+		bag.endpoints.add(ep1);
+		Endpoint ep2 = new Endpoint(1000, 2);
+		ep2.cacheLatency.put(1, 200);
+		ep2.cacheLatency.put(1, 300);
+		bag.endpoints.add(ep2);
+		VideoRequest req1 = new VideoRequest(0, 0, 1000);
+		VideoRequest req2 = new VideoRequest(1, 1, 1000);
+		VideoRequest req3 = new VideoRequest(2, 0, 1000);
+		VideoRequest req4 = new VideoRequest(3, 1, 1000);
+		bag.videoRequests.add(req1);
+		bag.videoRequests.add(req2);
+		bag.videoRequests.add(req3);
+		bag.videoRequests.add(req4);
+		return bag;
 	}
 }
