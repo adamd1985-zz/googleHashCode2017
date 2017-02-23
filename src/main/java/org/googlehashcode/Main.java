@@ -53,7 +53,7 @@ public class Main {
 				.asCharSource(file, Charsets.UTF_8)
 				.readLines();
 
-		System.out.println(String.format("Lines read: %s", lines.size()));
-		lines.stream().forEach(System.out::println);
+		final BestCacheConfig bestCacheConfig = new BestCacheConfig();
+		bestCacheConfig.loadBestConfig();
 	}
 }
