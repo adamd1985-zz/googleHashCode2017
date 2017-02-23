@@ -1,11 +1,11 @@
 package org.googlehashcode;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
-
 import org.googlehashcode.domain.Bag;
 import org.googlehashcode.domain.Endpoint;
 import org.googlehashcode.domain.VideoRequest;
+
+import java.io.IOException;
+import java.net.URISyntaxException;
 
 /**
  * Entry class. </br>
@@ -56,6 +56,7 @@ public class Main {
 		 * 
 		 * } } System.out.println(bag);
 		 */
+		Parser.parse("test.in");
 
 		Bag bag1 = new Bag(2, 2, 4, 2, 400);
 		bag1.videoSizes.add(100);
