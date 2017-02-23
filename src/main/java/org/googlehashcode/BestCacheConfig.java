@@ -9,7 +9,7 @@ import org.googlehashcode.domain.VideoRequest;
 
 public class BestCacheConfig {
 
-	List<VideoCache> caches = new ArrayList<>();
+	public List<VideoCache> caches = new ArrayList<>();
 
 	public long loadBestConfig(Bag bag) {
 		long savedLat = 0L;
@@ -30,7 +30,17 @@ public class BestCacheConfig {
 
 			for (VideoRequest req : bag.videoRequests) {
 				for (VideoCache videoCache : caches) {
-
+					boolean found = false;
+					for (Integer vid : videoCache.vidIds) {
+						if (req.videoId == vid) {
+							savedLat += ((bag.endpoints.get(req.endpointId).datacenterLatencyMS - videoCache.latency) * req.requestsNumber);
+							found = true;
+							break;
+						}
+					}
+					if (found) {
+						break;
+					}
 				}
 			}
 
