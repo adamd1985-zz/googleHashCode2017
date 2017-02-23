@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * Created by magiccrafter on 2/23/2017.
@@ -14,9 +15,9 @@ public class Output {
     public int serversNumber;
     public final Map<Integer, List<Integer>> cacheServers = new HashMap<>();
 
-    public Output(List<Integer> serverIds) {
-        serverIds.forEach(id -> cacheServers.put(id, new ArrayList<>()));
-        serversNumber = serverIds.size();
+    public Output(int serversNumber) {
+        IntStream.range(0, serversNumber).forEach(i -> cacheServers.put(i, new ArrayList<>()));
+        this.serversNumber = serversNumber;
     }
 
     public void addVideo(int serverId, int videoId) {
