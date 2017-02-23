@@ -56,7 +56,7 @@ public class Main {
 		 * 
 		 * } } System.out.println(bag);
 		 */
-		Parser.parse();
+		Parser.parse("test.in");
 
 		Bag bag1 = new Bag(2, 2, 4, 2, 400);
 		bag1.videoSizes.add(100);

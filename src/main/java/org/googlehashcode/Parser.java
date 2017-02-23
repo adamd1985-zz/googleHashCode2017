@@ -20,8 +20,8 @@ import java.util.stream.Collectors;
  */
 public class Parser {
 
-    public static Bag parse() throws URISyntaxException, IOException {
-        File file = Paths.get(Resources.getResource("test.in").toURI()).normalize().toFile();
+    public static Bag parse(String filename) throws URISyntaxException, IOException {
+        File file = Paths.get(Resources.getResource(filename).toURI()).normalize().toFile();
 
         ImmutableList<String> lines = Files
                 .asCharSource(file, Charsets.UTF_8)
