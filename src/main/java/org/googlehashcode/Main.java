@@ -1,17 +1,11 @@
 package org.googlehashcode;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.stream.Collectors;
 
-import com.google.common.base.Charsets;
-import com.google.common.collect.ImmutableList;
-import com.google.common.io.Files;
-import com.google.common.io.Resources;
 import org.googlehashcode.domain.Bag;
+import org.googlehashcode.domain.Endpoint;
+import org.googlehashcode.domain.VideoRequest;
 
 /**
  * Entry class. </br>
@@ -48,30 +42,43 @@ public class Main {
 	 * @throws URISyntaxException
 	 */
 	public static void main(String[] args) throws IOException, URISyntaxException {
-		File file = Paths.get(Resources.getResource("test.in").toURI()).normalize().toFile();
+		/*
+		 * File file = Paths.get(Resources.getResource("test.in").toURI()).normalize().toFile();
+		 * 
+		 * ImmutableList<String> lines = Files .asCharSource(file, Charsets.UTF_8) .readLines();
+		 * 
+		 * Bag bag = null; System.out.println(String.format("Lines read: %s", lines.size())); for
+		 * (int i = 0; i < lines.size(); i++) { String line = lines.get(i); if (i == 0) { Integer[]
+		 * elems = Parser.integerArray(line); bag = new Bag(elems[0], elems[1], elems[2], elems[3],
+		 * elems[4]); } else if (i == 1) { Integer[] videoSizes = Parser.integerArray(line);
+		 * bag.addVideoSizes(Arrays.stream(videoSizes).collect(Collectors.toList())); } else { //
+		 * Endpoints
+		 * 
+		 * } } System.out.println(bag);
+		 */
 
-		ImmutableList<String> lines = Files
-				.asCharSource(file, Charsets.UTF_8)
-				.readLines();
+		Bag bag1 = new Bag(2, 2, 4, 2, 400);
+		bag1.videoSizes.add(100);
+		bag1.videoSizes.add(200);
+		Endpoint ep1 = new Endpoint(1000, 2);
+		ep1.cacheLatency.put(0, 200);
+		ep1.cacheLatency.put(1, 300);
+		bag1.endpoints.add(ep1);
+		Endpoint ep2 = new Endpoint(1000, 2);
+		ep2.cacheLatency.put(0, 200);
+		ep2.cacheLatency.put(1, 300);
+		bag1.endpoints.add(ep2);
+		VideoRequest req1 = new VideoRequest(0, 0, 1000);
+		VideoRequest req2 = new VideoRequest(1, 0, 1000);
+		VideoRequest req3 = new VideoRequest(2, 0, 1000);
+		VideoRequest req4 = new VideoRequest(3, 0, 1000);
+		bag1.videoRequests.add(req1);
+		bag1.videoRequests.add(req2);
+		bag1.videoRequests.add(req3);
+		bag1.videoRequests.add(req4);
 
-		Bag bag = null;
-		System.out.println(String.format("Lines read: %s", lines.size()));
-		for (int i = 0; i < lines.size(); i++) {
-			String line = lines.get(i);
-			if (i == 0) {
-				Integer[] elems = Parser.integerArray(line);
-				bag = new Bag(elems[0],elems[1],elems[2],elems[3],elems[4]);
-			} else if (i == 1) {
-				Integer[] videoSizes = Parser.integerArray(line);
-				bag.addVideoSizes(Arrays.stream(videoSizes).collect(Collectors.toList()));
-			} else {
-				// Endpoints
-
-			}
-		}
-		System.out.println(bag);
-
-        final BestCacheConfig bestCacheConfig = new BestCacheConfig();
-        bestCacheConfig.loadBestConfig();
-    }
+		final BestCacheConfig bestCacheConfig = new BestCacheConfig();
+		final long score = bestCacheConfig.loadBestConfig(bag1);
+		System.out.println(score);
+	}
 }

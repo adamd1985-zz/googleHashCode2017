@@ -15,19 +15,21 @@ public class BestCacheConfig {
 		long savedLat = 0L;
 		boolean stop = false;
 		VideoCache curCache = new VideoCache();
+		curCache.memRemaining = bag.cacheServerCapacityMB;
 		do {
 			int vidId = 0;
 			for (Integer vidSize : bag.videoSizes) {
-				if (curCache.memRemaining - vidSize > 0) {
+				if (curCache.memRemaining - vidSize >= 0) {
 					curCache.vidIds.add(vidId);
 					++vidId;
 				}
 				else {
 					caches.add(curCache);
 					curCache = new VideoCache();
+					curCache.memRemaining = bag.cacheServerCapacityMB;
 				}
 			}
-
+			caches.add(curCache);
 			for (VideoRequest req : bag.videoRequests) {
 				for (VideoCache videoCache : caches) {
 					boolean found = false;
