@@ -14,4 +14,13 @@ public class VideoRequest {
         this.endpointId = endpointId;
         this.requestsNumber = requestsNumber;
     }
+
+    @Override
+    public String toString() {
+        return "VideoRequest{" +
+                "videoId=" + videoId +
+                ", endpointId=" + endpointId +
+                ", requestsNumber=" + requestsNumber +
+                '}';
+    }
 }

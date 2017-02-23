@@ -12,4 +12,12 @@ public class Endpoint {
         this.datacenterLatencyMS = datacenterLatencyMS;
         this.connectedCaches = connectedCaches;
     }
+
+    @Override
+    public String toString() {
+        return "Endpoint{" +
+                "datacenterLatencyMS=" + datacenterLatencyMS +
+                ", connectedCaches=" + connectedCaches +
+                '}';
+    }
 }

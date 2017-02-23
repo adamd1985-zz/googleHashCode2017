@@ -29,8 +29,8 @@ public class Bag {
         this.cacheServerCapacityMB = cacheServerCapacityMB;
     }
 
-    public Bag addVideoSizes(int videoSize) {
-        this.videoSizes.add(videoSize);
+    public Bag addVideoSizes(List<Integer> videoSizes) {
+        this.videoSizes.addAll(videoSizes);
         return this;
     }
 
@@ -42,5 +42,19 @@ public class Bag {
     public Bag addVideoRequest(VideoRequest videoRequest) {
         this.videoRequests.add(videoRequest);
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return "Bag{" +
+                "videosNumber=" + videosNumber +
+                ", endpointsNumber=" + endpointsNumber +
+                ", requestDescriptionsNumber=" + requestDescriptionsNumber +
+                ", cacheServersNumber=" + cacheServersNumber +
+                ", cacheServerCapacityMB=" + cacheServerCapacityMB +
+                ", videoSizes=" + videoSizes +
+                ", endpoints=" + endpoints +
+                ", videoRequests=" + videoRequests +
+                '}';
     }
 }

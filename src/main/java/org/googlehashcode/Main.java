@@ -1,14 +1,17 @@
 package org.googlehashcode;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.nio.file.Paths;
-
 import com.google.common.base.Charsets;
 import com.google.common.collect.ImmutableList;
 import com.google.common.io.Files;
 import com.google.common.io.Resources;
+import org.googlehashcode.domain.Bag;
+
+import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 /**
  * Entry class. </br>
@@ -45,15 +48,27 @@ public class Main {
 	 * @throws URISyntaxException
 	 */
 	public static void main(String[] args) throws IOException, URISyntaxException {
-		System.out.println("Hello world!");
-
-		File file = Paths.get(Resources.getResource("big.in").toURI()).normalize().toFile();
+		File file = Paths.get(Resources.getResource("test.in").toURI()).normalize().toFile();
 
 		ImmutableList<String> lines = Files
 				.asCharSource(file, Charsets.UTF_8)
 				.readLines();
 
+		Bag bag = null;
 		System.out.println(String.format("Lines read: %s", lines.size()));
-		lines.stream().forEach(System.out::println);
+		for (int i = 0; i < lines.size(); i++) {
+			String line = lines.get(i);
+			if (i == 0) {
+				Integer[] elems = Parser.integerArray(line);
+				bag = new Bag(elems[0],elems[1],elems[2],elems[3],elems[4]);
+			} else if (i == 1) {
+				Integer[] videoSizes = Parser.integerArray(line);
+				bag.addVideoSizes(Arrays.stream(videoSizes).collect(Collectors.toList()));
+			} else {
+				// Endpoints
+
+			}
+		}
+		System.out.println(bag);
 	}
 }
