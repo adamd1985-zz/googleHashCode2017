@@ -15,8 +15,6 @@ import org.googlehashcode.domain.VideoRequest;
 
 public class BestCacheConfig {
 
-	public List<VideoCache> caches = new ArrayList<>();
-
 	public List<VideoCache> prioritizeCacheByWeight(List<Endpoint> endpoints, List<VideoCache> caches, List<VideoRequest> reqs) {
 		Map<Integer, VideoCache> wieghtedCaches = new HashMap<>();
 		caches.forEach(c -> {
@@ -82,7 +80,7 @@ public class BestCacheConfig {
 
 			int vidId = 0;
 			for (Integer vidSize : bag.videoSizes) {
-				if (curCache.memRemaining - vidSize >= 0) {
+				if (curCache.memRemaining - vidSize > 0) {
 					curCache.vidIds.add(vidId);
 					curCache.memRemaining -= vidSize;
 					++vidId;
@@ -95,11 +93,11 @@ public class BestCacheConfig {
 					curCache = weightedCaches.get(curCacheId);
 				}
 			}
-			caches.add(curCache);
+
 			System.out.println("Judged vids");
 			for (VideoRequest req : bag.videoRequests) {
-				for (VideoCache videoCache : caches) {
-					if (!bag.endpoints.get(req.endpointId).cacheLatency.containsKey(caches.indexOf(videoCache))) {
+				for (VideoCache videoCache : weightedCaches) {
+					if (!bag.endpoints.get(req.endpointId).cacheLatency.containsKey(weightedCaches.indexOf(videoCache))) {
 						continue;
 					}
 
