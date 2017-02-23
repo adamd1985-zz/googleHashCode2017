@@ -2,6 +2,7 @@ package org.googlehashcode;
 
 import org.googlehashcode.domain.Bag;
 import org.googlehashcode.domain.Endpoint;
+import org.googlehashcode.domain.Output;
 import org.googlehashcode.domain.VideoRequest;
 
 import java.io.IOException;
@@ -79,7 +80,7 @@ public class Main {
 		bag1.videoRequests.add(req4);
 
 		final BestCacheConfig bestCacheConfig = new BestCacheConfig();
-		final long score = bestCacheConfig.loadBestConfig(bag1);
+		final Output score = bestCacheConfig.loadBestConfig(bag1);
 		System.out.println(score);
 	}
 }

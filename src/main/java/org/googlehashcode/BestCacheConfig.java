@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 import org.googlehashcode.domain.Bag;
 import org.googlehashcode.domain.Endpoint;
+import org.googlehashcode.domain.Output;
 import org.googlehashcode.domain.VideoCache;
 import org.googlehashcode.domain.VideoRequest;
 
@@ -54,11 +55,12 @@ public class BestCacheConfig {
 		return caches;
 	}
 
-	public long loadBestConfig(Bag bag) {
+	public Output loadBestConfig(Bag bag) {
 		long savedLat = 0L;
 		boolean stop = false;
 
 		List<VideoCache> weightedCaches = prioritizeCacheByWeight(bag.endpoints, createCaches(bag), bag.videoRequests);
+		Output output = new Output(weightedCaches.stream().map(w -> w.id).collect(Collectors.toList()));
 
 		int curCacheId = 0;
 		VideoCache curCache = weightedCaches.get(curCacheId);
@@ -103,6 +105,10 @@ public class BestCacheConfig {
 		}
 		while (!stop);
 
-		return savedLat;
+		weightedCaches.stream().forEach(cache -> {
+			cache.vidIds.stream().forEach(vid -> output.addVideo(cache.id, vid));
+		});
+
+		return output;
 	}
 }
