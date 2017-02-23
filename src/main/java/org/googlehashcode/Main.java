@@ -1,17 +1,14 @@
 package org.googlehashcode;
 
-import com.google.common.base.Charsets;
-import com.google.common.collect.ImmutableList;
-import com.google.common.io.Files;
-import com.google.common.io.Resources;
-import org.googlehashcode.domain.Bag;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.stream.Collectors;
+
+import com.google.common.base.Charsets;
+import com.google.common.collect.ImmutableList;
+import com.google.common.io.Files;
+import com.google.common.io.Resources;
 
 /**
  * Entry class. </br>
@@ -70,5 +67,8 @@ public class Main {
 			}
 		}
 		System.out.println(bag);
-	}
+
+        final BestCacheConfig bestCacheConfig = new BestCacheConfig();
+        bestCacheConfig.loadBestConfig();
+    }
 }
