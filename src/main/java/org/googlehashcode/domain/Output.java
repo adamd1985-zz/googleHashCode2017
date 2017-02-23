@@ -28,4 +28,12 @@ public class Output {
                 .stream().filter(v -> v != videoId).collect(Collectors.toList());
         cacheServers.put(serverId, updated);
     }
+
+    @Override
+    public String toString() {
+        return "Output{" +
+                "serversNumber=" + serversNumber +
+                ", cacheServers=" + cacheServers +
+                '}';
+    }
 }
