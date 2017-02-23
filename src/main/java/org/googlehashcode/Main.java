@@ -41,29 +41,11 @@ public class Main {
 	 * @throws URISyntaxException
 	 */
 	public static void main(String[] args) throws IOException, URISyntaxException {
-		String filename = "test";
+		String[] filenames = { "kittens", "me_at_the_zoo", "trending_today", "videos_worth_spreading" };
+
+		String filename = "trending_today";
 		Bag bag = Parser.parse(filename + ".in");
 
-//		Bag bag = new Bag(2, 2, 4, 2, 400);
-//		bag.videoSizes.add(100);
-//		bag.videoSizes.add(200);
-//		Endpoint ep1 = new Endpoint(1000, 2);
-//		ep1.cacheLatency.put(0, 200);
-//		ep1.cacheLatency.put(1, 300);
-//		bag.endpoints.add(ep1);
-//		Endpoint ep2 = new Endpoint(1000, 2);
-//		ep2.cacheLatency.put(1, 200);
-//		ep2.cacheLatency.put(1, 300);
-//		bag.endpoints.add(ep2);
-//		VideoRequest req1 = new VideoRequest(0, 0, 1000);
-//		VideoRequest req2 = new VideoRequest(1, 1, 1000);
-//		VideoRequest req3 = new VideoRequest(2, 0, 1000);
-//		VideoRequest req4 = new VideoRequest(3, 1, 1000);
-//		bag.videoRequests.add(req1);
-//		bag.videoRequests.add(req2);
-//		bag.videoRequests.add(req3);
-//		bag.videoRequests.add(req4);
-//
 		final BestCacheConfig bestCacheConfig = new BestCacheConfig();
 		final Output output = bestCacheConfig.loadBestConfig(bag);
 		System.out.println(output);

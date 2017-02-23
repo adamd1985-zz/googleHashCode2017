@@ -64,8 +64,6 @@ public class BestCacheConfig {
 
 		int curCacheId = 0;
 		VideoCache curCache = weightedCaches.get(curCacheId);
-
-		curCache.memRemaining = bag.cacheServerCapacityMB;
 		do {
 
 			int vidId = 0;
@@ -76,7 +74,11 @@ public class BestCacheConfig {
 					++vidId;
 				}
 				else {
-					curCache = weightedCaches.get(++curCacheId);
+					++curCacheId;
+					if (curCacheId >= weightedCaches.size()) {
+						break;
+					}
+					curCache = weightedCaches.get(curCacheId);
 				}
 			}
 			caches.add(curCache);
