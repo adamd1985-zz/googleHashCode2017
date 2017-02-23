@@ -10,3 +10,5 @@
 **/.settings
 .idea
 *.iml
+*.in
+*.out
