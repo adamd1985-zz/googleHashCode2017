@@ -24,15 +24,26 @@ public class BestCacheConfig {
 		});
 
 		endpoints.forEach(e -> {
+			
+			reqs.parallelStream().filter(reqs1 -> {
+				return reqs1.endpointId == e.id;
+			}).forEach(reqs2 -> {
+				e.totalReqs += reqs2.requestsNumber;
+			});
 
 			e.cacheLatency.keySet().parallelStream().forEach(key -> {
-				wieghtedCaches.get(key).weightUsage++;
-				reqs.parallelStream().filter(reqs1 -> {
-					return reqs1.endpointId == e.id;
-				}).forEach(reqs2 -> {
-					wieghtedCaches.get(key).weightUsage *= (reqs2.requestsNumber * e.cacheLatency.get(key).intValue());
-				});
+				wieghtedCaches.get(key).weightUsage += e.totalReqs;
+
 			});
+
+			
+			
+			
+			/*reqs.parallelStream().filter(reqs1 -> {
+				return reqs1.endpointId == e.id;
+			}).forEach(reqs2 -> {
+				wieghtedCaches.get(key).weightUsage *= (reqs2.requestsNumber * e.cacheLatency.get(key).intValue());
+			});*/
 		});
 
 		return wieghtedCaches.entrySet().parallelStream()

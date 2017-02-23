@@ -10,6 +10,9 @@ public class Endpoint {
 	public int id;
     public final int datacenterLatencyMS;
     public final int connectedCaches;
+    
+    public long totalReqs = 0;
+    
     // <cache id, latency>
     public final Map<Integer, Integer> cacheLatency = new HashMap<>();
 
