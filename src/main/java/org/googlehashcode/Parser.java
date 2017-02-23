@@ -6,6 +6,7 @@ import com.google.common.io.Files;
 import com.google.common.io.Resources;
 import org.googlehashcode.domain.Bag;
 import org.googlehashcode.domain.Endpoint;
+import org.googlehashcode.domain.VideoRequest;
 
 import java.io.File;
 import java.io.IOException;
@@ -43,10 +44,9 @@ public class Parser {
 
         // Endpoints
         int endpointsCnt = 0;
-        int lastEndpointData = 0;
         while (endpointsCnt < bag.endpointsNumber) {
             String line = lines.get(step);
-            System.out.println(line);
+//            System.out.println(line);
 
             Integer[] info = Parser.integerArray(line);
             int endpointLatency = info[0];
@@ -64,6 +64,17 @@ public class Parser {
 
             step++;
             endpointsCnt++;
+        }
+
+        // Video Requests
+        while (step < lines.size()) {
+            String line = lines.get(step);
+//            System.out.println(line);
+
+            Integer[] info = Parser.integerArray(line);
+            VideoRequest videoRequest = new VideoRequest(info[0], info[1], info[2]);
+            bag.addVideoRequest(videoRequest);
+            step++;
         }
 
         System.out.println(bag);
