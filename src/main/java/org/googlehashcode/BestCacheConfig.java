@@ -5,57 +5,39 @@ import java.util.List;
 
 import org.googlehashcode.domain.Bag;
 import org.googlehashcode.domain.VideoCache;
+import org.googlehashcode.domain.VideoRequest;
 
 public class BestCacheConfig {
-	final int[] vidSizes = { 20, 11 };
 
-	final int ep0nCache = 3;
+	List<VideoCache> caches = new ArrayList<>();
 
-	final int[] ep0CachesLats = { 170, 1, 22, 2, 224 };
-
-	final EP[] eps = { new EP(new int[] { 340, 500 }), new EP(new int[] { 1232, 334 }) };
-
-	class EP {
-
-		int[] reqs;
-
-		public EP(int[] reqs) {
-			super();
-			this.reqs = reqs;
-		}
-	}
-
-	class VidCache {
-		List<Integer> vids = new ArrayList<>();
-
-		int lat = 100;
-
-		int size = 100;
-
-	}
-
-	List<List<VidCache>> poConfigs = new ArrayList<>();
-
-	List<VidCache> caches = new ArrayList<>();
-
-	public void loadBestConfig(Bag bag) {
+	public long loadBestConfig(Bag bag) {
+		long savedLat = 0L;
 		boolean stop = false;
 		VideoCache curCache = new VideoCache();
 		do {
 			int vidId = 0;
-			for (int vidSize : vidSizes) {
-				if (curCache.size - vidSize > 0) {
-					curCache.vids.add(vidId);
+			for (Integer vidSize : bag.videoSizes) {
+				if (curCache.memRemaining - vidSize > 0) {
+					curCache.vidIds.add(vidId);
 					++vidId;
 				}
 				else {
 					caches.add(curCache);
-					curCache = new VidCache();
+					curCache = new VideoCache();
 				}
 			}
-			// Find least latency
+
+			for (VideoRequest req : bag.videoRequests) {
+				for (VideoCache videoCache : caches) {
+
+				}
+			}
+
 			stop = true;
 		}
 		while (!stop);
+
+		return savedLat;
 	}
 }
