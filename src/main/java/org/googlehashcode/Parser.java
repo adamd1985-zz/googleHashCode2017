@@ -77,7 +77,7 @@ public class Parser {
             step++;
         }
 
-        System.out.println(bag);
+//        System.out.println(bag);
 
         return bag;
     }
