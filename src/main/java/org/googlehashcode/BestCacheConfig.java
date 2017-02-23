@@ -60,7 +60,7 @@ public class BestCacheConfig {
 		boolean stop = false;
 
 		List<VideoCache> weightedCaches = prioritizeCacheByWeight(bag.endpoints, createCaches(bag), bag.videoRequests);
-		Output output = new Output(weightedCaches.stream().map(w -> w.id).collect(Collectors.toList()));
+		Output output = new Output(weightedCaches.size());
 
 		int curCacheId = 0;
 		VideoCache curCache = weightedCaches.get(curCacheId);
